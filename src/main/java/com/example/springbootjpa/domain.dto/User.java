@@ -1,8 +1,8 @@
 package com.example.springbootjpa.domain.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -10,14 +10,26 @@ import javax.persistence.*;
 @Table(name="User")
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userName;
+    private String username;
 
-    private String content;
+    private String password;
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public User() {
+    }
+
+    public static UserResponse of(User user) {
+        return new UserResponse(user.getId(), user.getUsername(), user.getPassword());
+    }
 
 }
